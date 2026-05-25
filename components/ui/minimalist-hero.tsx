@@ -120,7 +120,7 @@ export const MinimalistHero = ({
         </motion.div>
 
         {/* Center: portrait with circle */}
-        <div className="relative order-1 md:order-2 flex justify-center items-center h-full">
+        <div className="relative order-1 md:order-2 flex justify-center items-center md:h-full">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -134,7 +134,7 @@ export const MinimalistHero = ({
           <motion.img
             src={imageSrc}
             alt={imageAlt}
-            className="relative z-10 h-auto w-56 object-cover md:w-64 scale-150 lg:w-72"
+            className="relative z-10 h-auto w-72 object-cover md:w-64 md:scale-150 lg:w-72"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
