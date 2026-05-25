@@ -16,7 +16,19 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Melissa Morales | Project Manager & Construction Coordinator",
   description:
-    "Project Manager and Construction Coordinator with 7+ years delivering complex builds across retail, hospitality, healthcare, and residential sectors. Architectural background, bilingual (EN/ES), remote-ready.",
+    "Project Manager & Construction Coordinator with 7+ years delivering complex builds on time and on budget. Architectural background, PM mindset — always.",
+  openGraph: {
+    title: "Melissa Morales | Project Manager & Construction Coordinator",
+    description:
+      "Project Manager & Construction Coordinator with 7+ years delivering complex builds on time and on budget. Architectural background, PM mindset — always.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Melissa Morales | Project Manager & Construction Coordinator",
+    description:
+      "Project Manager & Construction Coordinator with 7+ years delivering complex builds on time and on budget. Architectural background, PM mindset — always.",
+  },
 };
 
 export default function RootLayout({
