@@ -1,39 +1,46 @@
-const skills = [
-  { label: "Project & Site Coordination", value: "95%", width: "w-[95%]" },
-  { label: "Budget & Cost Control", value: "90%", width: "w-[90%]" },
-  { label: "Risk Identification & Escalation", value: "92%", width: "w-[92%]" },
+const competencies = [
+  {
+    label: "Fast-Paced Project Management",
+    desc: "Thriving in dynamic construction environments that demand adaptability, rapid decision-making and continuous coordination between teams.",
+  },
+  {
+    label: "Project Issue Resolution",
+    desc: "Resolving technical and operational issues during construction through practical problem-solving and cross-team coordination.",
+  },
+  {
+    label: "Project Organisation & Follow-Up",
+    desc: "Maintaining structured tracking, follow-up processes and operational visibility across multiple ongoing activities.",
+  },
 ];
 
 export default function ImpactStatement() {
   return (
     <section className="mt-section-gap bg-primary py-32 overflow-hidden relative">
-      {/* Background text — parallax handled by ClientEffects */}
+      {/* Background text */}
       <div className="absolute inset-0 flex items-center justify-center opacity-10">
         <h2 className="impact-bg-text font-display-xl text-[25vw] leading-none text-white whitespace-nowrap">
           PROJECT MANAGEMENT
         </h2>
       </div>
 
-      <div className="px-margin-mobile md:px-margin-desktop relative z-10 grid grid-cols-12 gap-gutter items-center">
-        <div className="col-span-12 md:col-span-7">
-          <h3 className="font-display-xl-mobile md:font-headline-lg text-display-xl-mobile md:text-headline-lg text-white uppercase mb-8">
+      <div className="px-margin-mobile md:px-margin-desktop relative z-10 grid grid-cols-12 gap-gutter items-start">
+        {/* Left: headline */}
+        <div className="col-span-12 md:col-span-6">
+          <h3 className="font-display-xl-mobile md:font-headline-lg text-display-xl-mobile md:text-headline-lg text-white uppercase">
             A project manager who speaks the language of architecture — and delivers results.
           </h3>
         </div>
-        <div className="col-span-12 md:col-span-5 space-y-12">
-          {skills.map((skill) => (
-            <div key={skill.label}>
-              <div className="flex justify-between mb-2">
-                <span className="font-label-bold text-label-bold text-white uppercase">
-                  {skill.label}
-                </span>
-                <span className="font-label-bold text-label-bold text-white">
-                  {skill.value}
-                </span>
-              </div>
-              <div className="h-[2px] w-full bg-white/20">
-                <div className={`h-[4px] bg-white ${skill.width} -mt-[1px]`} />
-              </div>
+
+        {/* Right: competency list */}
+        <div className="col-span-12 md:col-span-5 md:col-start-8 divide-y divide-white/20">
+          {competencies.map((c) => (
+            <div key={c.label} className="py-5">
+              <span className="font-label-bold text-label-bold text-white uppercase block mb-1">
+                {c.label}
+              </span>
+              <span className="font-body-md text-body-md text-white/60 leading-snug">
+                {c.desc}
+              </span>
             </div>
           ))}
         </div>
