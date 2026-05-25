@@ -13,7 +13,7 @@ export default function Hero() {
       readMoreLink="#about"
       // Replace with Melissa's actual portrait photo
       imageSrc="/meli%20sideview.png"
-      imageAlt="Melissa Morales Cañón – Senior Project Manager"
+      imageAlt="Melissa Morales – Senior Project Manager"
       overlayText={{
         part1: "project",
         part2: "manager.",
