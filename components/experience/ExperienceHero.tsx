@@ -6,7 +6,7 @@ export default function ExperienceHero() {
           04 Career Path
         </div>
       </div>
-      <h1 className="font-display-xl-mobile md:font-display-xl text-display-xl-mobile md:text-display-xl uppercase mt-8">
+      <h1 className="font-display-xl-mobile md:font-display-xl text-[2.25rem] sm:text-display-xl-mobile md:text-display-xl uppercase mt-8 leading-none tracking-tight font-black">
         Professional
         <br />
         Experience.

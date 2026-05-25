@@ -3,7 +3,7 @@ export default function FooterSection() {
     <section className="mt-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-highest/30 border-t-2 border-structural-line pt-24 pb-12">
       <div className="grid grid-cols-12 gap-gutter mb-24">
         <div className="col-span-12 md:col-span-6">
-          <h2 className="font-display-xl-mobile md:font-display-xl text-display-xl-mobile md:text-display-xl uppercase mb-8 leading-none">
+          <h2 className="font-display-xl-mobile md:font-display-xl text-[2.25rem] sm:text-display-xl-mobile md:text-display-xl uppercase mb-8 leading-none font-black">
             Let's Create <br />
             Something <br />
             <span className="text-primary">Great Together.</span>
