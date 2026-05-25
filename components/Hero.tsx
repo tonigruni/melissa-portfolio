@@ -12,7 +12,7 @@ export default function Hero() {
       mainText="Project Manager & Construction Coordinator with 7+ years delivering complex builds on time and on budget. Architectural background, PM mindset — always."
       readMoreLink="#about"
       // Replace with Melissa's actual portrait photo
-      imageSrc="/meli side profile.png"
+      imageSrc="/meli%20sideview.png"
       imageAlt="Melissa Morales Cañón – Senior Project Manager"
       overlayText={{
         part1: "project",

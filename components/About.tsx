@@ -3,7 +3,7 @@ export default function About() {
     <section className="mt-section-gap md:mt-[160px] px-margin-mobile md:px-margin-desktop max-w-[1920px] mx-auto">
       <div className="structural-divider">
         <div className="section-label font-section-number text-section-number uppercase tracking-widest">
-          02 About Melissa Morales
+          02 About Melissa
         </div>
       </div>
       <div className="grid grid-cols-12 gap-gutter mt-12">

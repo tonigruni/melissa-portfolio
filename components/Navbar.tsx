@@ -9,7 +9,7 @@ export default function Navbar() {
         href="/"
         className="text-base font-bold tracking-wide md:font-headline-md md:text-headline-md text-on-surface hover:text-primary transition-colors truncate max-w-[180px] md:max-w-none"
       >
-        Melissa Morales Cañón
+        Melissa Morales
       </Link>
       <div className="flex items-center gap-4">
         <a href="https://www.linkedin.com/in/melissa-morales-ca%C3%B1%C3%B3n-71b111176/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex items-center text-primary hover:opacity-80 transition-opacity">

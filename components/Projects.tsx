@@ -264,12 +264,12 @@ export default function Projects() {
             Construction projects personally coordinated from kickoff to handover — scheduling, procurement, contractor oversight, and delivery.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 mt-0 bg-structural-line border border-structural-line">
+        <div className="flex flex-col md:flex-row md:items-stretch md:gap-2 md:h-[560px] gap-1 mt-0">
           {projects.map((project) => (
             <button
               key={project.title}
               onClick={() => project.caseStudy && setOpenProject(project)}
-              className="relative aspect-[3/4] group overflow-hidden bg-white cursor-pointer text-left"
+              className="relative aspect-[3/4] md:aspect-auto md:flex-grow md:w-40 md:hover:w-full md:transition-all md:duration-500 group overflow-hidden bg-white cursor-pointer text-left"
               aria-label={`View case study: ${project.title}`}
             >
               <Image
