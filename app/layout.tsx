@@ -14,7 +14,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Melissa Morales Cañón | Project Manager & Construction Coordinator",
+  title: "Melissa Morales | Project Manager & Construction Coordinator",
   description:
     "Project Manager and Construction Coordinator with 7+ years delivering complex builds across retail, hospitality, healthcare, and residential sectors. Architectural background, bilingual (EN/ES), remote-ready.",
 };
