@@ -37,7 +37,7 @@ export default function FooterSection() {
             Portfolio
           </a>
           <a
-            href="#"
+            href="mailto:melissamcanon@gmail.com?subject=CV%20Request"
             className="font-label-bold text-label-bold text-on-surface-variant hover:text-primary underline"
           >
             Download CV
