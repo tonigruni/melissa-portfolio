@@ -1,9 +1,9 @@
 export default function About() {
   return (
-    <section className="mt-section-gap px-margin-mobile md:px-margin-desktop max-w-[1920px] mx-auto">
+    <section className="mt-section-gap md:mt-[160px] px-margin-mobile md:px-margin-desktop max-w-[1920px] mx-auto">
       <div className="structural-divider">
         <div className="section-label font-section-number text-section-number uppercase tracking-widest">
-          01 About Melissa Morales
+          02 About Melissa Morales
         </div>
       </div>
       <div className="grid grid-cols-12 gap-gutter mt-12">
@@ -21,7 +21,7 @@ export default function About() {
             gives me an edge — I understand the technical, the structural, and
             the human side of every build.
           </p>
-          <div className="grid grid-cols-2 gap-12 border-t border-structural-line pt-12">
+          <div className="grid grid-cols-2 gap-6 md:gap-12 border-t border-structural-line pt-12">
             <div>
               <div className="font-display-xl text-headline-lg text-primary mb-2">
                 07+
@@ -44,8 +44,8 @@ export default function About() {
         {/* Right column */}
         <div className="col-span-12 md:col-span-6 lg:col-start-7 lg:col-span-6 flex flex-col justify-between">
           <div className="space-y-12">
-            <div className="group border-b border-structural-line pb-8 transition-all hover:pl-4">
-              <h4 className="font-headline-md text-headline-md mb-2">
+            <div className="group border-b border-structural-line pb-8 transition-all md:hover:pl-4">
+              <h4 className="font-headline-md text-headline-md uppercase mb-2">
                 Project Coordination
               </h4>
               <p className="font-body-md text-body-md text-on-surface-variant">
@@ -54,8 +54,8 @@ export default function About() {
                 reporting across multi-sector builds.
               </p>
             </div>
-            <div className="group border-b border-structural-line pb-8 transition-all hover:pl-4">
-              <h4 className="font-headline-md text-headline-md mb-2">
+            <div className="group border-b border-structural-line pb-8 transition-all md:hover:pl-4">
+              <h4 className="font-headline-md text-headline-md uppercase mb-2">
                 Budget & Risk Control
               </h4>
               <p className="font-body-md text-body-md text-on-surface-variant">
@@ -64,8 +64,8 @@ export default function About() {
                 corrective actions to keep projects on track.
               </p>
             </div>
-            <div className="group border-b border-structural-line pb-8 transition-all hover:pl-4">
-              <h4 className="font-headline-md text-headline-md mb-2">
+            <div className="group border-b border-structural-line pb-8 transition-all md:hover:pl-4">
+              <h4 className="font-headline-md text-headline-md uppercase mb-2">
                 Cross-functional Communication
               </h4>
               <p className="font-body-md text-body-md text-on-surface-variant">

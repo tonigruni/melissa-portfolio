@@ -5,8 +5,9 @@ import WhyMe from "@/components/WhyMe";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import ImpactStatement from "@/components/ImpactStatement";
-import ProfessionalSummary from "@/components/ProfessionalSummary";
-import HomepageExperience from "@/components/HomepageExperience";
+import ExperienceHero from "@/components/experience/ExperienceHero";
+import ExperienceTimeline from "@/components/experience/ExperienceTimeline";
+import ExperienceCTA from "@/components/experience/ExperienceCTA";
 import FooterSection from "@/components/FooterSection";
 
 export default function Home() {
@@ -19,8 +20,9 @@ export default function Home() {
       <About />
       <Projects />
       <ImpactStatement />
-      <ProfessionalSummary />
-      <HomepageExperience />
+      <ExperienceHero />
+      <ExperienceTimeline />
+      <ExperienceCTA />
       <FooterSection />
     </>
   );

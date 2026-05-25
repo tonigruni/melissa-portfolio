@@ -47,10 +47,10 @@ export default function HomepageExperience() {
         {experiences.map((exp) => (
           <div
             key={exp.number}
-            className="group relative grid grid-cols-12 gap-gutter py-16 transition-all hover:pl-4"
+            className="group relative grid grid-cols-12 gap-gutter py-10 md:py-16 transition-all md:hover:pl-4"
           >
             {/* Large background number */}
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 font-display-xl text-[10rem] leading-none text-on-surface opacity-5 group-hover:text-primary group-hover:opacity-10 transition-all select-none pointer-events-none">
+            <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 font-display-xl text-[10rem] leading-none text-on-surface opacity-5 group-hover:text-primary group-hover:opacity-10 transition-all select-none pointer-events-none">
               {exp.number}
             </div>
 

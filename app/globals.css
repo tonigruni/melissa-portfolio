@@ -68,7 +68,13 @@
   --color-muted-silver: #f4f4f4;
 
   /* Spacing tokens */
-  --spacing-section-gap: 160px;
+  --spacing-section-gap: 80px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --spacing-section-gap: 160px;
+  }
   --spacing-margin-mobile: 24px;
   --spacing-margin-desktop: 80px;
   --spacing-gutter: 24px;

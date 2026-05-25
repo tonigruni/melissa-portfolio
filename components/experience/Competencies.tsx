@@ -1,12 +1,12 @@
 const tags = [
-  "Project Leadership",
-  "Urban Planning",
-  "BIM Implementation",
-  "Budget Management",
-  "Stakeholder Relations",
-  "Regulatory Compliance",
-  "Sustainable Design",
-  "Site Supervision",
+  "Project Scheduling & Tracking",
+  "Budget Control & Cost Management",
+  "Cross-functional Team Coordination",
+  "Stakeholder & Client Communication",
+  "Documentation & Compliance",
+  "Risk Identification & Escalation",
+  "Procurement & Materials Management",
+  "Regulatory Compliance & QA",
 ];
 
 export default function Competencies() {

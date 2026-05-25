@@ -112,7 +112,7 @@ export const MinimalistHero = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1 }}
-          className="z-20 order-2 md:order-1 text-center md:text-left"
+          className="z-20 order-3 md:order-1 text-center md:text-left"
         >
           <p className="mx-auto max-w-[300px] font-body-lg text-body-lg leading-relaxed text-on-surface/80 md:mx-0">
             {mainText}
@@ -151,7 +151,7 @@ export const MinimalistHero = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.2 }}
-          className="z-20 order-3 flex items-center justify-center text-center md:justify-start"
+          className="z-20 order-2 md:order-3 flex items-center justify-center text-center md:justify-start"
         >
           <h1 className="font-display-xl-mobile md:font-display-xl text-6xl font-extrabold text-on-surface md:text-7xl lg:text-8xl leading-none">
             {overlayText.part1}

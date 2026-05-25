@@ -23,12 +23,12 @@ const attributes = [
 
 export default function WhyMe() {
   return (
-    <section className="px-margin-mobile md:px-margin-desktop bg-surface-container-low py-24 max-w-[1920px] mx-auto">
+    <section className="px-margin-mobile md:px-margin-desktop bg-surface-container-low pt-24 pb-section-gap max-w-[1920px] mx-auto">
 
       {/* Full-width structural divider */}
       <div className="structural-divider mb-12">
         <div className="section-label font-section-number text-section-number uppercase tracking-widest">
-          Why Melissa
+          01 Why Melissa
         </div>
       </div>
 
@@ -57,7 +57,7 @@ export default function WhyMe() {
         {/* Right: strength rows */}
         <div className="col-span-12 md:col-span-7 lg:col-span-6 lg:col-start-7 divide-y divide-structural-line/20">
           {strengths.map((s) => (
-            <div key={s.heading} className="py-6 group hover:pl-3 transition-all">
+            <div key={s.heading} className="py-6 group md:hover:pl-3 transition-all">
               <h3 className="font-label-bold text-label-bold uppercase tracking-widest mb-2 group-hover:text-primary transition-colors">
                 {s.heading}
               </h3>
@@ -70,11 +70,11 @@ export default function WhyMe() {
       </div>
 
       {/* Attributes stats row */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mt-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 md:gap-8 mt-16">
         {attributes.map((a) => (
           <div
             key={a.label}
-            className={`border-t-2 pt-6 ${a.primary ? "border-primary" : "border-on-surface"}`}
+            className={`border-t-2 pt-4 md:pt-6 ${a.primary ? "border-primary" : "border-on-surface"}`}
           >
             <div className="font-label-bold text-label-bold uppercase tracking-widest text-on-surface text-[11px]">
               {a.label}

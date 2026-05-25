@@ -1,6 +1,6 @@
 const skills = [
   { label: "Autodesk Revit (BIM)", value: "95%", width: "w-[95%]" },
-  { label: "MS Project / Scheduling", value: "90%", width: "w-[90%]" },
+  { label: "SketchUp / 3D Modeling", value: "90%", width: "w-[90%]" },
   { label: "AutoCAD Architecture", value: "98%", width: "w-[98%]" },
   { label: "Adobe CC (InDesign/Photoshop)", value: "85%", width: "w-[85%]" },
 ];

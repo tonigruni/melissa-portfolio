@@ -26,7 +26,7 @@ export default function ImpactStatement() {
       <div className="px-margin-mobile md:px-margin-desktop relative z-10 grid grid-cols-12 gap-gutter items-start">
         {/* Left: headline */}
         <div className="col-span-12 md:col-span-6">
-          <h3 className="font-display-xl-mobile md:font-headline-lg text-display-xl-mobile md:text-headline-lg text-white uppercase">
+          <h3 className="font-headline-lg text-headline-lg text-white uppercase leading-tight">
             A project manager who speaks the language of architecture — and delivers results.
           </h3>
         </div>

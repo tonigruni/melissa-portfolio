@@ -26,7 +26,7 @@ export default function ProfessionalSummary() {
             holder, and experienced working with international clients and remote teams.
           </p>
 
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-2 gap-4 md:gap-8">
             <div className="border-t-2 border-primary pt-6">
               <div className="font-display-xl text-headline-lg text-primary mb-2">7+</div>
               <div className="font-label-bold text-label-bold uppercase text-on-surface">

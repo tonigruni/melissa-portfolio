@@ -250,13 +250,21 @@ export default function Projects() {
 
   return (
     <>
-      <section className="mt-section-gap px-margin-mobile md:px-margin-desktop max-w-[1920px] mx-auto">
+      <section id="projects" className="mt-section-gap md:mt-[160px] px-margin-mobile md:px-margin-desktop max-w-[1920px] mx-auto">
         <div className="structural-divider">
           <div className="section-label font-section-number text-section-number uppercase tracking-widest">
-            02 Featured Developments
+            03 Projects Managed & Built
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 mt-12 bg-structural-line border border-structural-line">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mt-12 mb-8">
+          <h2 className="font-headline-lg text-headline-lg uppercase">
+            Selected Builds.
+          </h2>
+          <p className="font-body-md text-body-md text-on-surface-variant max-w-md">
+            Construction projects personally coordinated from kickoff to handover — scheduling, procurement, contractor oversight, and delivery.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 mt-0 bg-structural-line border border-structural-line">
           {projects.map((project) => (
             <button
               key={project.title}
