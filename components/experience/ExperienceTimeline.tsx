@@ -54,7 +54,7 @@ const roles = [
 
 export default function ExperienceTimeline() {
   return (
-    <section className="px-margin-mobile md:px-margin-desktop mb-section-gap grid grid-cols-12 gap-gutter">
+    <section className="px-margin-mobile md:px-margin-desktop mb-section-gap grid grid-cols-12 gap-gutter overflow-x-hidden">
       <div className="col-span-12 md:col-span-4 flex flex-col gap-12">
         <p className="font-body-lg text-body-lg text-on-surface-variant max-w-sm">
           A decade of leadership in architectural project management, bridging
@@ -85,10 +85,10 @@ export default function ExperienceTimeline() {
             </div>
             <div className="space-y-4">
               <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-2">
-                <h3 className="font-headline-md text-headline-md uppercase">
+                <h3 className="font-headline-md text-[1.375rem] md:text-headline-md uppercase">
                   {role.title}
                 </h3>
-                <span className="font-label-bold text-label-bold text-primary whitespace-nowrap">
+                <span className="font-label-bold text-label-bold text-primary md:whitespace-nowrap">
                   {role.company} | {role.period}
                 </span>
               </div>
