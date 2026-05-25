@@ -69,14 +69,14 @@
 
   /* Spacing tokens */
   --spacing-section-gap: 80px;
+  --spacing-margin-mobile: 24px;
+  --spacing-margin-desktop: 80px;
+  --spacing-gutter: 24px;
 }
 
 @media (min-width: 768px) {
   :root {
     --spacing-section-gap: 160px;
-    --spacing-margin-mobile: 24px;
-    --spacing-margin-desktop: 80px;
-    --spacing-gutter: 24px;
 
     /* Font families — reference CSS vars exposed by next/font on <html> */
     --font-label-bold: var(--hanken-font, "Hanken Grotesk"), sans-serif;
