@@ -74,20 +74,20 @@
 @media (min-width: 768px) {
   :root {
     --spacing-section-gap: 160px;
-  }
-  --spacing-margin-mobile: 24px;
-  --spacing-margin-desktop: 80px;
-  --spacing-gutter: 24px;
+    --spacing-margin-mobile: 24px;
+    --spacing-margin-desktop: 80px;
+    --spacing-gutter: 24px;
 
-  /* Font families — reference CSS vars exposed by next/font on <html> */
-  --font-label-bold: var(--hanken-font, "Hanken Grotesk"), sans-serif;
-  --font-display-xl: var(--hanken-font, "Hanken Grotesk"), sans-serif;
-  --font-display-xl-mobile: var(--hanken-font, "Hanken Grotesk"), sans-serif;
-  --font-section-number: var(--hanken-font, "Hanken Grotesk"), sans-serif;
-  --font-headline-md: var(--hanken-font, "Hanken Grotesk"), sans-serif;
-  --font-headline-lg: var(--hanken-font, "Hanken Grotesk"), sans-serif;
-  --font-body-lg: var(--inter-font, "DM Sans"), sans-serif;
-  --font-body-md: var(--inter-font, "DM Sans"), sans-serif;
+    /* Font families — reference CSS vars exposed by next/font on <html> */
+    --font-label-bold: var(--hanken-font, "Hanken Grotesk"), sans-serif;
+    --font-display-xl: var(--hanken-font, "Hanken Grotesk"), sans-serif;
+    --font-display-xl-mobile: var(--hanken-font, "Hanken Grotesk"), sans-serif;
+    --font-section-number: var(--hanken-font, "Hanken Grotesk"), sans-serif;
+    --font-headline-md: var(--hanken-font, "Hanken Grotesk"), sans-serif;
+    --font-headline-lg: var(--hanken-font, "Hanken Grotesk"), sans-serif;
+    --font-body-lg: var(--inter-font, "DM Sans"), sans-serif;
+    --font-body-md: var(--inter-font, "DM Sans"), sans-serif;
+  }
 }
 
 /* Text size utilities — registered via @utility so responsive variants work (md:text-*) */
