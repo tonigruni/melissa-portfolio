@@ -1,250 +1,254 @@
 """
 Generate Melissa Morales CV PDF
+Two-column layout with photo header — 1 page guaranteed
 Output: public/Melissa_Morales_CV.pdf
+
+Uses canvas + Frame (not SimpleDocTemplate) for precise 1-page control.
 """
 
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.units import mm
-from reportlab.platypus import (
-    SimpleDocTemplate, Paragraph, Spacer, HRFlowable, Table, TableStyle
-)
-from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT
+from reportlab.lib.utils import ImageReader
+from reportlab.platypus import Paragraph, Spacer, HRFlowable, Frame
+from reportlab.pdfgen import canvas as pdf_canvas
 import os
 
-# ── Colors ──────────────────────────────────────────────────────────────────
-RED      = colors.HexColor("#b7102a")
-DARK     = colors.HexColor("#271717")
-MUTED    = colors.HexColor("#5b403f")
-LIGHT    = colors.HexColor("#f4f4f4")
-WHITE    = colors.white
+# ── Colors ───────────────────────────────────────────────────────────────────
+RED     = colors.HexColor("#b7102a")
+DARK    = colors.HexColor("#1c1a1a")
+MUTED   = colors.HexColor("#777777")
+SIDEBAR = colors.HexColor("#f7f4f4")
+WHITE   = colors.white
+DIVIDER = colors.HexColor("#e4dcdc")
 
-# ── Page setup ───────────────────────────────────────────────────────────────
-OUTPUT = os.path.join(os.path.dirname(__file__), "../public/Melissa_Morales_CV.pdf")
-W, H = A4
-MARGIN_X = 18 * mm
-MARGIN_Y = 16 * mm
+# ── Paths ────────────────────────────────────────────────────────────────────
+BASE   = os.path.dirname(__file__)
+OUTPUT = os.path.join(BASE, "../public/Melissa_Morales_CV.pdf")
+PHOTO  = os.path.join(BASE, "../public/meli sideview.png")
 
-doc = SimpleDocTemplate(
-    OUTPUT,
-    pagesize=A4,
-    leftMargin=MARGIN_X,
-    rightMargin=MARGIN_X,
-    topMargin=MARGIN_Y,
-    bottomMargin=MARGIN_Y,
-)
+# ── Page geometry ─────────────────────────────────────────────────────────────
+W, H      = A4                 # 595.28 × 841.89 pt
 
-# ── Styles ───────────────────────────────────────────────────────────────────
-def s(name, **kw):
-    defaults = dict(fontName="Helvetica", fontSize=9, leading=13,
-                    textColor=DARK, spaceAfter=0, spaceBefore=0)
-    defaults.update(kw)
-    return ParagraphStyle(name, **defaults)
+# Photo: scale to fill HEADER_H at natural aspect ratio (no distortion)
+HEADER_H  = 180
+ir = ImageReader(PHOTO)
+_iw, _ih  = ir.getSize()
+PHOTO_W   = round(HEADER_H * _iw / _ih)   # ≈ 121 pt
+NAME_W    = W - PHOTO_W                   # ≈ 474 pt
+
+# Body columns
+SB_W      = 170
+MAIN_W    = W - SB_W           # 425 pt
+SB_PAD    = 14
+MAIN_PAD  = 16
+BODY_H    = H - HEADER_H       # 661.89 pt
+
+# ── Styles ────────────────────────────────────────────────────────────────────
+def mk(name, **kw):
+    base = dict(fontName="Helvetica", fontSize=8.5, leading=12.5,
+                textColor=DARK, spaceAfter=0, spaceBefore=0)
+    base.update(kw)
+    return ParagraphStyle(name, **base)
 
 ST = {
-    "name":       s("name",    fontName="Helvetica-Bold", fontSize=26, leading=30, textColor=DARK),
-    "title":      s("title",   fontName="Helvetica",      fontSize=11, leading=14, textColor=RED),
-    "contact":    s("contact", fontName="Helvetica",      fontSize=8,  leading=12, textColor=MUTED),
-    "section":    s("section", fontName="Helvetica-Bold", fontSize=8,  leading=10, textColor=RED,
-                               spaceBefore=8, spaceAfter=4, letterSpacing=1.2),
-    "role_title": s("rtitle",  fontName="Helvetica-Bold", fontSize=9,  leading=12, textColor=DARK),
-    "role_meta":  s("rmeta",   fontName="Helvetica",      fontSize=8,  leading=11, textColor=RED),
-    "body":       s("body",    fontName="Helvetica",      fontSize=8.5,leading=12.5, textColor=MUTED),
-    "bullet":     s("bullet",  fontName="Helvetica",      fontSize=8.5,leading=12.5, textColor=MUTED,
-                               leftIndent=8, firstLineIndent=-8),
-    "skill_tag":  s("stag",    fontName="Helvetica-Bold", fontSize=7.5,leading=10, textColor=DARK),
-    "stat_num":   s("snum",    fontName="Helvetica-Bold", fontSize=20, leading=22, textColor=RED),
-    "stat_lbl":   s("slbl",    fontName="Helvetica-Bold", fontSize=6.5,leading=9,  textColor=DARK,
-                               letterSpacing=0.8),
+    # Header (on dark bg)
+    "h_name":  mk("hn", fontName="Helvetica-Bold", fontSize=28, leading=32, textColor=WHITE),
+    "h_title": mk("ht", fontName="Helvetica",      fontSize=9.5, leading=13, textColor=RED),
+    # Sidebar
+    "sb_sec":  mk("ss", fontName="Helvetica-Bold", fontSize=7,   leading=9,  textColor=DARK,
+                  spaceBefore=14, spaceAfter=3, letterSpacing=1.2),
+    "sb_lbl":  mk("sl", fontName="Helvetica",      fontSize=6.5, leading=9,  textColor=MUTED, spaceBefore=5),
+    "sb_val":  mk("sv", fontName="Helvetica-Bold", fontSize=8,   leading=11, textColor=DARK),
+    "sb_bul":  mk("sbu",fontName="Helvetica",      fontSize=7.5, leading=11, textColor=MUTED,
+                  leftIndent=7, firstLineIndent=-7),
+    # Main
+    "m_sec":   mk("ms", fontName="Helvetica-Bold", fontSize=8,   leading=10, textColor=DARK,
+                  spaceBefore=12, spaceAfter=3, letterSpacing=1.3),
+    "company": mk("co", fontName="Helvetica-Bold", fontSize=8.5, leading=12, textColor=DARK, spaceBefore=8),
+    "role":    mk("ro", fontName="Helvetica",      fontSize=8,   leading=11, textColor=MUTED),
+    "body":    mk("bo", fontName="Helvetica",      fontSize=8,   leading=12, textColor=MUTED),
+    "bul":     mk("bu", fontName="Helvetica",      fontSize=8,   leading=11.5,textColor=MUTED,
+                  leftIndent=8, firstLineIndent=-8),
+    "edu_h":   mk("eh", fontName="Helvetica-Bold", fontSize=8,   leading=11, textColor=DARK),
+    "edu_m":   mk("em", fontName="Helvetica",      fontSize=8,   leading=11, textColor=MUTED),
 }
 
-def rule(color=RED, thickness=1.5):
-    return HRFlowable(width="100%", thickness=thickness, color=color, spaceAfter=6, spaceBefore=0)
+def accent():
+    return HRFlowable(width=22, thickness=2.5, color=RED, spaceAfter=4, spaceBefore=0)
 
-def section_header(text):
-    return [
-        Spacer(1, 6),
-        Paragraph(text.upper(), ST["section"]),
-        rule(RED, 0.8),
-    ]
+def div():
+    return HRFlowable(width="100%", thickness=0.5, color=DIVIDER, spaceAfter=4, spaceBefore=0)
 
-def bullet(text):
-    return Paragraph(f"/ &nbsp;{text}", ST["bullet"])
+def sb_sec(text):
+    return [accent(), Paragraph(text.upper(), ST["sb_sec"])]
 
-# ── Content ───────────────────────────────────────────────────────────────────
-story = []
+def m_sec(text):
+    return [accent(), Paragraph(text.upper(), ST["m_sec"])]
 
-# ── HEADER ────────────────────────────────────────────────────────────────────
-story.append(Paragraph("Melissa Morales", ST["name"]))
-story.append(Spacer(1, 3))
-story.append(Paragraph("Project Manager &amp; Construction Coordinator", ST["title"]))
-story.append(Spacer(1, 5))
-story.append(Paragraph(
-    "melissamcanon@gmail.com &nbsp;&nbsp;·&nbsp;&nbsp; "
-    "+57 313 646 6863 &nbsp;&nbsp;·&nbsp;&nbsp; "
-    "Medellín, Colombia &nbsp;&nbsp;·&nbsp;&nbsp; "
-    "linkedin.com/in/melissamcanon &nbsp;&nbsp;·&nbsp;&nbsp; "
-    "B1/B2 U.S. Visa Holder &nbsp;&nbsp;·&nbsp;&nbsp; Bilingual EN/ES",
-    ST["contact"]
-))
-story.append(Spacer(1, 8))
-story.append(rule(RED, 2))
+# ══════════════════════════════════════════════════════════════════════════════
+# CONTENT LISTS
+# ══════════════════════════════════════════════════════════════════════════════
 
-# ── SUMMARY ───────────────────────────────────────────────────────────────────
-story += section_header("Profile")
-story.append(Paragraph(
-    "Project Manager and Construction Coordinator with 7+ years delivering complex builds across retail, "
-    "hospitality, healthcare, and residential sectors. Architectural training provides a technical edge — "
-    "able to bridge design intent and structural execution. Proven track record managing 6+ concurrent "
-    "projects, bilingual stakeholder communication (EN/ES), and a proactive, solution-oriented approach "
-    "that keeps projects on time and on budget.",
+# ── HEADER content ───────────────────────────────────────────────────────────
+header_items = [
+    Spacer(1, 24),
+    HRFlowable(width=26, thickness=3, color=RED, spaceAfter=10, spaceBefore=0),
+    Paragraph("Melissa", ST["h_name"]),
+    Paragraph("Morales", ST["h_name"]),
+    Spacer(1, 7),
+    Paragraph("Project Manager &amp; Construction Coordinator", ST["h_title"]),
+]
+
+# ── SIDEBAR content ──────────────────────────────────────────────────────────
+sb = []
+sb += sb_sec("Contact")
+for lbl, val in [
+    ("EMAIL",     "melissamcanon@gmail.com"),
+    ("PHONE",     "+57 313 646 6863"),
+    ("LOCATION",  "Medellín, Colombia"),
+    ("LINKEDIN",  "linkedin.com/in/melissamcanon"),
+    ("VISA",      "B1/B2 U.S. Visa Holder"),
+    ("LANGUAGES", "Spanish (native)  ·  English (B2)"),
+]:
+    sb.append(Paragraph(lbl, ST["sb_lbl"]))
+    sb.append(Paragraph(val, ST["sb_val"]))
+
+sb += sb_sec("Core Competencies")
+for c in [
+    "End-to-End Project Coordination",
+    "Budget Preparation & Cost Control",
+    "Risk Identification & Escalation",
+    "Subcontractor & Supplier Management",
+    "Milestone & Schedule Tracking",
+    "Site Supervision & Quality Control",
+    "Procurement & Purchase Orders",
+    "Stakeholder Communication",
+    "Regulatory Compliance",
+]:
+    sb.append(Paragraph(f"· {c}", ST["sb_bul"]))
+
+sb += sb_sec("Tools & Software")
+for tool in ["MS Office", "Google Workspace", "Notion", "Trello",
+             "ClickUp", "Asana", "AutoCAD", "SketchUp", "InDesign"]:
+    sb.append(Paragraph(f"· {tool}", ST["sb_bul"]))
+
+# ── MAIN content ─────────────────────────────────────────────────────────────
+main = []
+main += m_sec("About Me")
+main.append(Paragraph(
+    "Project Manager and Construction Coordinator with 7+ years delivering complex builds across "
+    "retail, hospitality, healthcare, and residential sectors. Architectural training bridges design "
+    "intent and structural execution. Bilingual (EN/ES), solution-oriented, and proven managing "
+    "6+ concurrent projects on time and on budget.",
     ST["body"]
 ))
 
-# ── CORE COMPETENCIES ─────────────────────────────────────────────────────────
-story += section_header("Core Competencies")
-skills_data = [
-    ["End-to-End Project Coordination", "Budget Preparation & Cost Control", "Risk Identification & Escalation"],
-    ["Subcontractor & Supplier Management", "Cross-functional Stakeholder Communication", "Procurement & Purchase Orders"],
-    ["Milestone & Schedule Tracking", "Site Supervision & Quality Control", "Regulatory Compliance"],
-]
-skills_table = Table(
-    [[Paragraph(cell, ST["bullet"]) for cell in row] for row in skills_data],
-    colWidths=[(W - 2 * MARGIN_X) / 3] * 3,
-)
-skills_table.setStyle(TableStyle([
-    ("VALIGN", (0, 0), (-1, -1), "TOP"),
-    ("LEFTPADDING", (0, 0), (-1, -1), 0),
-    ("RIGHTPADDING", (0, 0), (-1, -1), 4),
-    ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
-    ("TOPPADDING", (0, 0), (-1, -1), 0),
-]))
-story.append(skills_table)
+main += m_sec("Work Experience")
+main.append(div())
 
-# ── EXPERIENCE ────────────────────────────────────────────────────────────────
-story += section_header("Work Experience")
-
-roles = [
-    {
-        "title": "Administrative Site Resident — Project Coordinator",
-        "company": "CM Morales S.A.S",
-        "period": "Jan 2024 — Present",
-        "bullets": [
-            "Lead end-to-end coordination of the PRANIK COLIVING project (1,608 m²): scheduling, procurement, team oversight, and regulatory compliance for a 36-room hospitality renovation in Laureles, Medellín.",
-            "Track project milestones, deliverables, and deadlines across subcontractors and suppliers; escalate risks proactively to project leadership.",
-            "Manage administrative documentation: budgets, purchase orders, progress reports, and weekly status updates for stakeholders.",
-            "Coordinate structural reinforcements, facade overhaul, elevator installation, and emergency stairway execution within scope and budget.",
+for company, title, period, bullets in [
+    (
+        "CM Morales S.A.S",
+        "Administrative Site Resident — Project Coordinator",
+        "Jan 2024 — Present",
+        [
+            "Lead end-to-end coordination of PRANIK COLIVING (1,608 m²): scheduling, procurement, team oversight, and regulatory compliance for a 36-room hospitality renovation in Laureles.",
+            "Track milestones across subcontractors and suppliers; manage budgets, purchase orders, and weekly stakeholder reports.",
+            "Coordinate structural reinforcements, facade overhaul, elevator installation, and emergency stairway within scope and budget.",
         ],
-    },
-    {
-        "title": "Site Resident & Project Coordinator",
-        "company": "Espiral Studio",
-        "period": "Dec 2021 — Dec 2023",
-        "bullets": [
-            "Managed 6+ concurrent commercial construction projects across retail and food service, coordinating budgets, personnel, and materials from kickoff to handover.",
+    ),
+    (
+        "Espiral Studio",
+        "Site Resident & Project Coordinator",
+        "Dec 2021 — Dec 2023",
+        [
+            "Managed 6+ concurrent commercial projects (retail, food service) — budgets, personnel, and materials from kickoff to handover.",
             "Prepared and monitored detailed project budgets; identified cost variances and implemented corrective actions.",
-            "Coordinated B2B communications with clients, contractors, and suppliers on behalf of the lead architect/PM.",
-            "Notable projects: IKEA Viva Envigado, Bodytech Éxito Robledo, Dollarcity Éxito Itagüí, Bimbo Itagüí plant.",
+            "Notable: IKEA Viva Envigado, Bodytech Éxito Robledo, Dollarcity Éxito Itagüí, Bimbo Itagüí plant.",
         ],
-    },
-    {
-        "title": "Site Resident & Space Personalization",
-        "company": "Contacto Arquitectura",
-        "period": "Apr 2019 — Dec 2021",
-        "bullets": [
-            "Coordinated construction execution across healthcare, corporate, commercial, and residential sectors; managed schedules, budgets, procurement, and team assignments.",
-            "Prepared cost estimates for residential and commercial remodeling projects.",
+    ),
+    (
+        "Contacto Arquitectura",
+        "Site Resident & Space Personalization",
+        "Apr 2019 — Dec 2021",
+        [
+            "Coordinated construction across healthcare, corporate, commercial, and residential sectors; managed schedules, budgets, and team assignments.",
             "Key projects: Cedimed health centers, Arus cooperative HQ, Restaurante Akashi, residential model units.",
         ],
-    },
-    {
-        "title": "Design & Facilities Management Intern",
-        "company": "Tigo Une",
-        "period": "Jan 2018 — Jun 2018",
-        "bullets": [
-            "Designed interior workspace layouts compliant with occupational and safety standards.",
-            "Managed planimetry updates and space adaptation projects across multiple corporate locations.",
-            "Coordinated logistics for office relocations and facility improvements.",
+    ),
+    (
+        "Tigo Une",
+        "Design & Facilities Management Intern",
+        "Jan 2018 — Jun 2018",
+        [
+            "Designed interior workspace layouts; managed planimetry updates and office relocation logistics across multiple locations.",
         ],
-    },
-]
+    ),
+]:
+    main.append(Paragraph(
+        f'{company} &nbsp;<font color="#b7102a">— {period}</font>',
+        ST["company"]
+    ))
+    main.append(Paragraph(f'<i>{title}</i>', ST["role"]))
+    for b in bullets:
+        main.append(Paragraph(f"· {b}", ST["bul"]))
+    main.append(Spacer(1, 5))
 
-for role in roles:
-    # Title + meta in a two-column row
-    meta_table = Table(
-        [[Paragraph(role["title"], ST["role_title"]),
-          Paragraph(f"{role['company']} &nbsp;|&nbsp; {role['period']}", ST["role_meta"])]],
-        colWidths=[(W - 2 * MARGIN_X) * 0.62, (W - 2 * MARGIN_X) * 0.38],
-    )
-    meta_table.setStyle(TableStyle([
-        ("VALIGN", (0, 0), (-1, -1), "TOP"),
-        ("LEFTPADDING", (0, 0), (-1, -1), 0),
-        ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
-        ("TOPPADDING", (0, 0), (-1, -1), 0),
-        ("ALIGN", (1, 0), (1, 0), "RIGHT"),
-    ]))
-    story.append(meta_table)
-    for b in role["bullets"]:
-        story.append(bullet(b))
-    story.append(Spacer(1, 8))
-
-# ── EDUCATION ────────────────────────────────────────────────────────────────
-story += section_header("Education")
-edu_table = Table(
-    [[Paragraph("Bachelor of Architecture", ST["role_title"]),
-      Paragraph("Universidad de San Buenaventura, Medellín &nbsp;|&nbsp; Graduated 2018", ST["role_meta"])]],
-    colWidths=[(W - 2 * MARGIN_X) * 0.38, (W - 2 * MARGIN_X) * 0.62],
-)
-edu_table.setStyle(TableStyle([
-    ("VALIGN", (0, 0), (-1, -1), "TOP"),
-    ("LEFTPADDING", (0, 0), (-1, -1), 0),
-    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-    ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
-    ("TOPPADDING", (0, 0), (-1, -1), 0),
-    ("ALIGN", (1, 0), (1, 0), "RIGHT"),
-]))
-story.append(edu_table)
-
-# ── TOOLS ────────────────────────────────────────────────────────────────────
-story += section_header("Tools & Software")
-tools = ["Microsoft Office", "Google Workspace", "Notion", "Trello", "ClickUp",
-         "Asana", "AutoCAD", "SketchUp", "InDesign"]
-story.append(Paragraph(
-    " &nbsp;·&nbsp; ".join(tools),
-    ST["body"]
+main += m_sec("Education")
+main.append(Paragraph("Bachelor of Architecture", ST["edu_h"]))
+main.append(Paragraph(
+    "Universidad de San Buenaventura, Medellín  ·  Graduated 2018",
+    ST["edu_m"]
 ))
 
-# ── STATS BAR ────────────────────────────────────────────────────────────────
-story.append(Spacer(1, 10))
-stats = [
-    ("7+",  "Years Experience"),
-    ("6+",  "Concurrent Projects"),
-    ("4",   "Industry Sectors"),
-    ("B1/B2","U.S. Visa Holder"),
-]
-stats_row = [[Paragraph(v, ST["stat_num"]), Paragraph(l.upper(), ST["stat_lbl"])] for v, l in stats]
-# Build as paired columns
-flat = []
-for num_p, lbl_p in stats_row:
-    flat.append([num_p, lbl_p])
+# ══════════════════════════════════════════════════════════════════════════════
+# RENDER — canvas + Frame (guaranteed 1 page)
+# ══════════════════════════════════════════════════════════════════════════════
+c = pdf_canvas.Canvas(OUTPUT, pagesize=A4)
 
-stats_table = Table(
-    [flat[0] + flat[1] + flat[2] + flat[3]],
-    colWidths=[(W - 2 * MARGIN_X) / 8] * 8,
+# ── Draw backgrounds ─────────────────────────────────────────────────────────
+# Header: dark
+c.setFillColor(DARK)
+c.rect(0, H - HEADER_H, W, HEADER_H, fill=1, stroke=0)
+
+# Photo (natural aspect, no distortion)
+c.drawImage(PHOTO, W - PHOTO_W, H - HEADER_H, width=PHOTO_W, height=HEADER_H)
+
+# Sidebar: pinkish-white, full body height
+c.setFillColor(SIDEBAR)
+c.rect(0, 0, SB_W, BODY_H, fill=1, stroke=0)
+
+# ── Flow header text ─────────────────────────────────────────────────────────
+header_frame = Frame(
+    22, H - HEADER_H,          # x, y (bottom-left of frame)
+    NAME_W - 30, HEADER_H,     # width, height
+    leftPadding=0, rightPadding=0,
+    topPadding=0, bottomPadding=0,
+    showBoundary=0,
 )
-stats_table.setStyle(TableStyle([
-    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-    ("LEFTPADDING", (0, 0), (-1, -1), 4),
-    ("RIGHTPADDING", (0, 0), (-1, -1), 2),
-    ("TOPPADDING", (0, 0), (-1, -1), 6),
-    ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
-    ("BACKGROUND", (0, 0), (-1, -1), LIGHT),
-    ("LINEABOVE", (0, 0), (-1, 0), 2, RED),
-]))
-story.append(stats_table)
+header_frame.addFromList(header_items, c)
 
-# ── BUILD ─────────────────────────────────────────────────────────────────────
-doc.build(story)
+# ── Flow sidebar ─────────────────────────────────────────────────────────────
+sb_frame = Frame(
+    0, 0,
+    SB_W, BODY_H,
+    leftPadding=SB_PAD, rightPadding=SB_PAD,
+    topPadding=14, bottomPadding=8,
+    showBoundary=0,
+)
+sb_frame.addFromList(sb, c)
+
+# ── Flow main content ─────────────────────────────────────────────────────────
+main_frame = Frame(
+    SB_W, 0,
+    MAIN_W, BODY_H,
+    leftPadding=MAIN_PAD, rightPadding=MAIN_PAD,
+    topPadding=14, bottomPadding=8,
+    showBoundary=0,
+)
+main_frame.addFromList(main, c)
+
+# ── Save ─────────────────────────────────────────────────────────────────────
+c.save()
 print(f"CV generated: {os.path.abspath(OUTPUT)}")
